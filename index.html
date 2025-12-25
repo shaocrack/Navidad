@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un mensaje especial 🎄</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top, #1a2a6c, #b21f1f, #fdbb2d);
+    min-height: 100vh;
+    overflow: hidden;
+    color: white;
+}
+
+/* Nieve */
+.snow {
+    position: fixed;
+    top: -10px;
+    animation: fall linear infinite;
+    opacity: 0.8;
+}
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* Corazones */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    animation: float 6s linear infinite;
+}
+@keyframes float {
+    to {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Pantallas */
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(15px, 4vw, 40px);
+    transition: opacity 1s ease;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(14px);
+    border-radius: 25px;
+    padding: clamp(25px, 5vw, 45px);
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    animation: pop 1.3s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+h1 {
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    line-height: 1.6;
+    min-height: 90px;
+}
+
+/* Botones */
+button {
+    margin-top: 25px;
+    padding: 15px 35px;
+    width: 100%;
+    max-width: 280px;
+    border: none;
+    border-radius: 40px;
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+button:hover {
+    transform: scale(1.08);
+}
+
+/* Final */
+.final {
+    font-size: clamp(1rem, 3.5vw, 1.3rem);
+    color: gold;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 6px gold; }
+    to { text-shadow: 0 0 25px gold; }
+}
+
+/* Ajustes móviles extremos */
+@media (max-width: 360px) {
+    p { min-height: 70px; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="na.mp3" loop></audio>
+
+<!-- Pantalla 1 -->
+<div class="screen" id="screen1">
+    <div class="card">
+        <h1>🎁 Tienes un regalo</h1>
+        <p>Solo alguien especial puede abrirlo ✨</p>
+        <button onclick="start()">Abrir regalo 🎄</button>
+    </div>
+</div>
+
+<!-- Pantalla 2 -->
+<div class="screen hidden" id="screen2">
+    <div class="card">
+        <h1>🎄 Feliz Navidad</h1>
+        <p id="typeText"></p>
+        <button onclick="next()">Siguiente 💫</button>
+    </div>
+</div>
+
+<!-- Pantalla final -->
+<div class="screen hidden" id="screen3">
+    <div class="card final">
+        🎅🎄✨<br><br>
+        La asociacion de hombres fieles, timidos y callados del Ecuador,  
+        del cual soy presidente,  
+        te desea feliz navidad :D
+        #SHAOPRO
+    </div>
+</div>
+
+<script>
+const messages = [
+    "Para una chica bonita ✨",
+    "Que ilumina cualquier lugar con su sonrisa 💖",
+    "Que merece abrazos sinceros y risas largas",
+    "Y una Navidad tan especial como ella 🌟"
+];
+
+let msgIndex = 0;
+let charIndex = 0;
+
+function start() {
+    document.getElementById("music").play();
+    document.getElementById("screen1").classList.add("hidden");
+    document.getElementById("screen2").classList.remove("hidden");
+    typeWriter();
+}
+
+function typeWriter() {
+    if (charIndex < messages[msgIndex].length) {
+        document.getElementById("typeText").innerHTML += messages[msgIndex][charIndex];
+        charIndex++;
+        setTimeout(typeWriter, 45);
+    }
+}
+
+function next() {
+    msgIndex++;
+    charIndex = 0;
+    document.getElementById("typeText").innerHTML = "";
+
+    if (msgIndex < messages.length) {
+        typeWriter();
+        spawnHeart();
+    } else {
+        document.getElementById("screen2").classList.add("hidden");
+        document.getElementById("screen3").classList.remove("hidden");
+    }
+}
+
+/* Nieve */
+for (let i = 0; i < 60; i++) {
+    const snow = document.createElement("div");
+    snow.className = "snow";
+    snow.innerHTML = "❄";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.fontSize = Math.random() * 12 + 10 + "px";
+    snow.style.animationDuration = Math.random() * 5 + 5 + "s";
+    document.body.appendChild(snow);
+}
+
+/* Corazones */
+function spawnHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+</script>
+
+</body>
+</html>
