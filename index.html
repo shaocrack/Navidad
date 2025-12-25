@@ -3,47 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Un mensaje especial 🎄</title>
+<title>Un detalle especial 🎄</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
 <style>
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background: radial-gradient(circle at top, #1a2a6c, #b21f1f, #fdbb2d);
+    margin: 0;
+    background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
     min-height: 100vh;
     overflow: hidden;
     color: white;
-}
-
-/* Nieve */
-.snow {
-    position: fixed;
-    top: -10px;
-    animation: fall linear infinite;
-    opacity: 0.8;
-}
-@keyframes fall {
-    to { transform: translateY(110vh); }
-}
-
-/* Corazones */
-.heart {
-    position: fixed;
-    bottom: -20px;
-    animation: float 6s linear infinite;
-}
-@keyframes float {
-    to {
-        transform: translateY(-120vh) rotate(360deg);
-        opacity: 0;
-    }
 }
 
 /* Pantallas */
@@ -54,8 +29,8 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: clamp(15px, 4vw, 40px);
-    transition: opacity 1s ease;
+    padding: 20px;
+    transition: opacity 1s;
 }
 
 .hidden {
@@ -65,49 +40,104 @@ body {
 
 /* Card */
 .card {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.18);
     backdrop-filter: blur(14px);
     border-radius: 25px;
-    padding: clamp(25px, 5vw, 45px);
+    padding: 30px;
     width: 100%;
     max-width: 520px;
     box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-    animation: pop 1.3s ease;
-}
-
-@keyframes pop {
-    from { transform: scale(0.85); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
 }
 
 h1 {
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
-    margin-bottom: 20px;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    margin-bottom: 15px;
 }
 
 p {
     font-size: clamp(1rem, 3.5vw, 1.2rem);
     line-height: 1.6;
-    min-height: 90px;
 }
 
-/* Botones */
+/* Botón */
 button {
     margin-top: 25px;
     padding: 15px 35px;
-    width: 100%;
-    max-width: 280px;
     border: none;
     border-radius: 40px;
-    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    font-size: 1rem;
     background: linear-gradient(45deg, #ff416c, #ff4b2b);
     color: white;
     cursor: pointer;
-    transition: transform 0.3s;
 }
 
-button:hover {
-    transform: scale(1.08);
+/* Árbol */
+.tree {
+    position: relative;
+    width: 220px;
+    height: 280px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.tree::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 50px;
+    background: #6d4c41;
+    border-radius: 5px;
+}
+
+.layer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-bottom: 75px solid #2ecc71;
+}
+
+.layer:nth-child(1) { top: 20px; }
+.layer:nth-child(2) { top: 80px; }
+.layer:nth-child(3) { top: 140px; }
+
+/* Adornos */
+.ornament {
+    position: absolute;
+    font-size: 1.6rem;
+    animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Estrella */
+.star {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    font-size: 3rem;
+    animation: star 1s forwards;
+}
+
+@keyframes star {
+    to { transform: translateX(-50%) scale(1); }
+}
+
+/* Mensaje */
+.message {
+    margin-top: 15px;
+    min-height: 70px;
+    font-size: 1.05rem;
 }
 
 /* Final */
@@ -122,9 +152,14 @@ button:hover {
     to { text-shadow: 0 0 25px gold; }
 }
 
-/* Ajustes móviles extremos */
-@media (max-width: 360px) {
-    p { min-height: 70px; }
+/* Nieve */
+.snow {
+    position: fixed;
+    top: -10px;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    to { transform: translateY(110vh); }
 }
 </style>
 </head>
@@ -133,77 +168,99 @@ button:hover {
 
 <audio id="music" src="na.mp3" loop></audio>
 
-<!-- Pantalla 1 -->
+<!-- Inicio -->
 <div class="screen" id="screen1">
     <div class="card">
-        <h1>🎁 Tienes un regalo</h1>
-        <p>Solo alguien especial puede abrirlo ✨</p>
-        <button onclick="start()">Abrir regalo 🎄</button>
+        <h1>🎁 Un detalle navideño</h1>
+        <p>Es sencillo… pero hecho con cariño ✨</p>
+        <button onclick="start()">Comenzar 🎄</button>
     </div>
 </div>
 
-<!-- Pantalla 2 -->
+<!-- Juego -->
 <div class="screen hidden" id="screen2">
     <div class="card">
-        <h1>🎄 Feliz Navidad</h1>
-        <p id="typeText"></p>
-        <button onclick="next()">Siguiente 💫</button>
+        <h1>🎄 Completa el árbol</h1>
+        <p>Tócalo para decorarlo ✨</p>
+
+        <div class="tree" onclick="addOrnament()">
+            <div class="layer"></div>
+            <div class="layer"></div>
+            <div class="layer"></div>
+        </div>
+
+        <div class="message" id="msg"></div>
+        <p id="progress">Adornos: 0 / 5</p>
     </div>
 </div>
 
-<!-- Pantalla final -->
+<!-- Final -->
 <div class="screen hidden" id="screen3">
     <div class="card final">
         🎅🎄✨<br><br>
-        La asociacion de hombres fieles, timidos y callados del Ecuador,  
-        del cual soy presidente,  
+        La asociacion de hombres fieles, timidos y callados del Ecuador,<br>
+        del cual soy presidente,<br>
         te desea feliz navidad :D
-        #SHAOPRO
     </div>
 </div>
 
 <script>
+const music = document.getElementById("music");
+
 const messages = [
-    "Para una chica bonita ✨",
-    "Que ilumina cualquier lugar con su sonrisa 💖",
-    "Que merece abrazos sinceros y risas largas",
-    "Y una Navidad tan especial como ella 🌟"
+    "Que esta Navidad te regale momentos tranquilos y sonrisas sinceras 🎄",
+    "A veces los detalles pequeños hacen los días más bonitos ✨",
+    "Que nunca te falten motivos para sonreír 😊",
+    "Este arbolito se va llenando de buenos deseos 🌟",
+    "Y este último adorno es solo para recordarte algo bonito 🎁"
 ];
 
-let msgIndex = 0;
-let charIndex = 0;
+
+const icons = ["🎁","🔔","🎀","❄️","💖"];
+let count = 0;
 
 function start() {
-    document.getElementById("music").play();
+    music.play();
     document.getElementById("screen1").classList.add("hidden");
     document.getElementById("screen2").classList.remove("hidden");
-    typeWriter();
 }
 
-function typeWriter() {
-    if (charIndex < messages[msgIndex].length) {
-        document.getElementById("typeText").innerHTML += messages[msgIndex][charIndex];
-        charIndex++;
-        setTimeout(typeWriter, 45);
+function addOrnament() {
+    if (count >= icons.length) return;
+
+    const ornament = document.createElement("div");
+    ornament.className = "ornament";
+    ornament.innerHTML = icons[count];
+    ornament.style.left = Math.random() * 140 + 40 + "px";
+    ornament.style.top = Math.random() * 140 + 40 + "px";
+    document.querySelector(".tree").appendChild(ornament);
+
+    document.getElementById("msg").innerText = messages[count];
+    count++;
+    document.getElementById("progress").innerText = `Adornos: ${count} / ${icons.length}`;
+
+    if (count === icons.length) {
+        setTimeout(showStar, 800);
     }
 }
 
-function next() {
-    msgIndex++;
-    charIndex = 0;
-    document.getElementById("typeText").innerHTML = "";
+function showStar() {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.innerHTML = "⭐";
+    document.querySelector(".tree").appendChild(star);
 
-    if (msgIndex < messages.length) {
-        typeWriter();
-        spawnHeart();
-    } else {
+    document.getElementById("msg").innerText =
+        "¿Sabías que el mejor adorno de esta Navidad eres tú? ✨\nAsí de linda, así de hermosa :D";
+
+    setTimeout(() => {
         document.getElementById("screen2").classList.add("hidden");
         document.getElementById("screen3").classList.remove("hidden");
-    }
+    }, 3000);
 }
 
 /* Nieve */
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 50; i++) {
     const snow = document.createElement("div");
     snow.className = "snow";
     snow.innerHTML = "❄";
@@ -211,18 +268,6 @@ for (let i = 0; i < 60; i++) {
     snow.style.fontSize = Math.random() * 12 + 10 + "px";
     snow.style.animationDuration = Math.random() * 5 + 5 + "s";
     document.body.appendChild(snow);
-}
-
-/* Corazones */
-function spawnHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 6000);
 }
 </script>
 
